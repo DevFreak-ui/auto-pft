@@ -1,38 +1,34 @@
 [
-    {
-      "id": 1,
-      "header": "Cover page",
-      "type": "Cover page",
-      "status": "In Process",
-      "target": "18",
-      "limit": "5",
-      "reviewer": "Eddie Lake"
-    },
-    {
-      "id": 2,
-      "header": "Table of contents",
-      "type": "Table of contents",
-      "status": "Done",
-      "target": "29",
-      "limit": "24",
-      "reviewer": "Eddie Lake"
-    },
-    {
-      "id": 3,
-      "header": "Executive summary",
-      "type": "Narrative",
-      "status": "Done",
-      "target": "10",
-      "limit": "13",
-      "reviewer": "Eddie Lake"
-    },
-    {
-      "id": 4,
-      "header": "Technical approach",
-      "type": "Narrative",
-      "status": "Done",
-      "target": "27",
-      "limit": "23",
-      "reviewer": "Jamik Tashpulatov"
-    }
-  ]
+  {
+    "reportId": "RPT-001",
+    "patientName": "John Doe / P12345",
+    "uploadedBy": "Dr. Smith",
+    "uploadDate": "2024-06-01",
+    "status": "In progress",
+    "reviewer": "-"
+  },
+  {
+    "reportId": "RPT-002",
+    "patientName": "Jane Roe / P67890",
+    "uploadedBy": "Nurse Kelly",
+    "uploadDate": "2024-06-02",
+    "status": "Pending review",
+    "reviewer": "-"
+  },
+  {
+    "reportId": "RPT-003",
+    "patientName": "Sam Lee / P54321",
+    "uploadedBy": "Dr. Smith",
+    "uploadDate": "2024-06-03",
+    "status": "Approved",
+    "reviewer": "Dr. Adams"
+  },
+  {
+    "reportId": "RPT-004",
+    "patientName": "Alex Kim / P98765",
+    "uploadedBy": "Nurse Kelly",
+    "uploadDate": "2024-06-04",
+    "status": "Approved",
+    "reviewer": "Dr. Adams"
+  }
+]
