@@ -9,9 +9,9 @@ interface ReportProgressStepperProps {
 const ReportProgressStepper = ({ step = 1 }: ReportProgressStepperProps) => {
 
     const stagesData = {
-        1: {"title": "Our Data Specialist will analyze your data to extract the relevant information"},
-        2: {"title": "Stage Two"},
-        3: {"title": "Stage Three"},
+        1: {"title": "Extracting data from your uploaded document"},
+        2: {"title": "Analyzing the extracted data"},
+        3: {"title": "Generating your report"},
     }
 
     return (
