@@ -5,7 +5,7 @@ import ReportProgressStepper from "@/components/custom/ReportProgressStepper"
 import { useReportProgress } from "@/hooks/useReportProgress";
 
 const GenerateReportPage = () => {
-	const [generationProgress, setGenerationProgress] = useState(true)
+	const [generationProgress, _] = useState(true)
 	const stage = useReportProgress();
 
 	// Handle file drop
@@ -37,7 +37,7 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 				<div className="flex items-center justify-center w-3/5 mx-auto mt-10">
 					<div
 						{...getRootProps()}
-						className={`flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ${
+						className={`flex flex-col items-center justify-center w-full h-64 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50/20 dark:hover:bg-gray-700/10 dark:bg-gray-800/10 dark:border-green/50 dark:hover:border-green/80 ${
 							isDragActive ? "border-blue-500" : ""
 						}`}
 					>
