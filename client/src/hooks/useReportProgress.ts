@@ -6,7 +6,7 @@ export function useReportProgress() {
   useEffect(() => {
     const interval = setInterval(() => {
       setStage((prev) => (prev === 3 ? 1 : (prev + 1) as 1 | 2 | 3));
-    }, 2000);
+    }, 7000);
     return () => clearInterval(interval);
   }, []);
 

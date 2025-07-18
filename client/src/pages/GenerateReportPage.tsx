@@ -2,22 +2,27 @@ import { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import PageLayout from "./PageContainer"
 import ReportProgressStepper from "@/components/custom/ReportProgressStepper"
-import { useReportProgress } from "@/hooks/useReportProgress";
+import { useReportProgress } from "@/hooks/useReportProgress"
+import { Button } from "@/components/ui/button"
 
 const GenerateReportPage = () => {
-	const [generationProgress, _] = useState(true)
-	const stage = useReportProgress();
+	const [generationProgress, setGenerationProgress] = useState(false)
+	const stage = useReportProgress()
 
 	// Handle file drop
 	const onDrop = useCallback((acceptedFiles: File[]) => {
 	// You can handle the uploaded files here
 	// For example, upload to server or update state
+	setTimeout(() => {
+		setGenerationProgress(true)
+	}, 3000)
 	console.log(acceptedFiles)
 }, [])
 
 const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
 	onDrop,
-	accept: { 'application/pdf': [], 'text/csv': [], 'text/plain': [], 'text/json': []}
+	accept: { 'application/pdf': [], 'text/csv': [], 'text/plain': [], 'text/json': [] },
+	multiple: false
 })
 
   return (
@@ -28,7 +33,7 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 
 		{!generationProgress && (
 			<div className="flex flex-col items-center justify-center mt-20">
-				<h1 className="text-4xl font-bold">PFT Report Made Easy</h1>
+				<h1 className="text-4xl text-/70 font-bold">PFT Report Made Easy</h1>
 				<p className="text-sm text-muted-foreground mt-2">
 				Upload your documents and let AutoPFT generate a PFT report for you.
 				</p>
@@ -37,7 +42,7 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 				<div className="flex items-center justify-center w-3/5 mx-auto mt-10">
 					<div
 						{...getRootProps()}
-						className={`flex flex-col items-center justify-center w-full h-64 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50/20 dark:hover:bg-gray-700/10 dark:bg-gray-800/10 dark:border-green/50 dark:hover:border-green/80 ${
+						className={`flex flex-col items-center justify-center w-4/5 h-54 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50/20 dark:hover:bg-gray-700/10 dark:bg-gray-800/10 dark:border-green/50 dark:hover:border-green/80 ${
 							isDragActive ? "border-blue-500" : ""
 						}`}
 					>
@@ -59,15 +64,15 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 
 				{/* Show selected files */}
 				{acceptedFiles.length > 0 && (
-				<div className="mt-4 w-3/5 mx-auto">
-					<h2 className="text-lg font-semibold mb-2">Selected files:</h2>
-					<ul>
-					{acceptedFiles.map((file) => (
-						<li key={file.name} className="text-sm">
-						{file.name} ({Math.round(file.size / 1024)} KB)
-						</li>
-					))}
-					</ul>
+				<div className="mt-6 w-1/2 mx-auto">
+					<h2 className="text-lg font-semibold mb-2">Selected file:</h2>
+					<Button variant="outline" className="flex gap-3 cursor-pointer">
+						{acceptedFiles.map((file) => (
+							<span key={file.name} className="text-sm">
+								{file.name} ({Math.round(file.size / 1024)} KB) | Uploading...
+							</span>
+						))}
+					</Button>
 				</div>
 				)}
 			</div>
