@@ -2,28 +2,24 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# Install native build tools (needed for packages like rollup, esbuild, etc.)
+# Install native build tools and enable yarn via corepack
 RUN apt-get update && apt-get install -y \
   python3 \
   make \
   g++ \
   bash \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable
 
 # Copy config files first to leverage Docker layer caching
-COPY package.json package-lock.json .npmrc ./
+COPY package.json yarn.lock ./
 
-# Optional: clear everything before install
-RUN rm -rf node_modules package-lock.json
+RUN rm -rf node_modules
 
-# Avoid optional native modules like @rollup/rollup-linux-x64-gnu
-ENV npm_config_optional=false
+RUN yarn install --frozen-lockfile
 
-RUN npm install
-
-# Copy the rest of the source code
 COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["yarn", "dev", "--host", "0.0.0.0"]
