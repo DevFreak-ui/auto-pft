@@ -5,6 +5,7 @@ import NotFound from "@/pages/NotFound"
 import Reports from "@/pages/Reports"
 import Settings from "@/pages/Settings"
 import ChatBotPage from "@/pages/ChatBotPage"
+import PricePage from "@/pages/Prices"
 
 const AppRoutes = () => {
 
@@ -15,6 +16,7 @@ const AppRoutes = () => {
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/chatbot" element={<ChatBotPage />} />
+            <Route path="/prices" element={<PricePage />} />
             
             <Route path="*" element={<NotFound />} />
         </Routes>
