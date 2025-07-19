@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ModeToggle } from "@/components/mode-toggle"
+import { IconTrendingUp } from "@tabler/icons-react"
+import { Link } from "react-router-dom"
 
 export function SiteHeader() {
   return (
@@ -14,16 +16,12 @@ export function SiteHeader() {
         />
         <h1 className="text-base font-medium">Generate with AutoPFT</h1>
         <div className="ml-auto flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="hidden sm:flex">
-            <a
-              href="#"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="dark:text-foreground"
-            >
-              User Guide
-            </a>
-          </Button>
+          <Link to={'/prices'}>
+            <Button variant="outline" className="cursor-pointer flex gap-2">
+              <span>Subscribe to Pro</span>
+              <IconTrendingUp />
+            </Button>
+          </Link>
           <ModeToggle />
         </div>
       </div>
