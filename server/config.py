@@ -5,9 +5,10 @@ Configuration settings for AutoPFTReport System.
 import os
 from typing import Dict, Any
 from typing import Any
+from pydantic_settings import BaseSettings,SettingsConfigDict
 
 
-class Settings:
+class Settings(BaseSettings):
     """Application settings."""
     
     # API Configuration
@@ -70,6 +71,8 @@ class Settings:
     # Performance Monitoring
     ENABLE_METRICS: bool = True
     METRICS_RETENTION_DAYS: int = 30
+
+    model_config = SettingsConfigDict(env_file=".env")
     
 
 
