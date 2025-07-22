@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button"
 
 interface ReportProgressStepperProps {
     step?: 1 | 2 | 3
+    canViewReport?: boolean
+    onViewReportClick?: () => void
 }
 
-const ReportProgressStepper = ({ step = 1 }: ReportProgressStepperProps) => {
+const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportClick }: ReportProgressStepperProps) => {
 
     const stagesData = {
         1: {"title": "Extracting data from your uploaded document"},
@@ -32,7 +34,6 @@ const ReportProgressStepper = ({ step = 1 }: ReportProgressStepperProps) => {
                             ) : (
                                 <IconChecks className={`w-8 h-8 text-background`} />
                             )}
-                            {/* <IconChecks className={`w-8 h-8 ${step > 1 ? 'text-background' : step === 1 ? 'text-green' : 'text-gray-400'}`} /> */}
                         </div>
                         <div className="absolute text-sm dark:text-green -bottom-24 left-1/2 -translate-x-1/2 w-44 ml-8">
                             <p className={`text-sm ${step === 1 ? 'text-muted-foreground' : ' text-muted-foreground/40'}`}>
@@ -52,7 +53,6 @@ const ReportProgressStepper = ({ step = 1 }: ReportProgressStepperProps) => {
                         ) : (
                             <IconEmergencyBed className="absolute w-6 h-6 text-white/10"/>
                         )}
-                        {/* <IconEmergencyBed className={`absolute w-6 h-6 ${step === 2 ? 'text-green/80' : step >= 2 ? 'text-green/5' : 'text-gray-400'}`} /> */}
                         <div className="absolute text-sm dark:text-green -bottom-24 left-1/2 -translate-x-1/2 w-44 ml-12">
                             <p className={`text-sm ${step === 2 ? 'text-muted-foreground' : ' text-muted-foreground/40'}`}>
                                 {stagesData[2].title}
@@ -81,14 +81,15 @@ const ReportProgressStepper = ({ step = 1 }: ReportProgressStepperProps) => {
                     </span>
                 </li>
             </ol>
-            
-            <div className="flex justify-center w-3/5 mt-44">
-                <Button variant="outline" className="flex gap-3 cursor-pointer">
-                    <span>View Report</span>
-                    <IconArrowRight />
-                </Button>
-            </div>
-
+            {/* Only show the View Report button when canViewReport is true */}
+            {canViewReport && (
+              <div className="flex justify-center w-3/5 mt-44">
+                  <Button variant="outline" className="flex gap-3 cursor-pointer" onClick={onViewReportClick}>
+                      <span>View Report</span>
+                      <IconArrowRight />
+                  </Button>
+              </div>
+            )}
         </div>
     )
 

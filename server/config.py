@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     LITELLM_MODEL: str = os.getenv("LITELLM_MODEL","openai/gpt-4o")
     LITELLM_KEY: str = os.getenv("LITELLM_KEY","sk-S")
     LITELLM_API_BASE: str = os.getenv("LITELLM_API_BASE","http://91.108.112.45:4000")
+    LITELLM_ENDPOINT: str = os.getenv("LITELLM_ENDPOINT", "")
+    PYTHONPATH: str = os.getenv("PYTHONPATH", "")
+    PYTHONUNBUFFERED: str = os.getenv("PYTHONUNBUFFERED", "")
+    VITE_API_URL: str = os.getenv("VITE_API_URL", "")
+    ENVIRONMENT: str = os.getenv("ENVIRONMENT", "")
     
     # Processing Configuration
     MAX_FILE_SIZE: int = 10 * 1024 * 1024  # 10MB

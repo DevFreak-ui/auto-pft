@@ -11,7 +11,7 @@ const PricePage = () => {
                 <p>Generate Unlimited Report when you are on PRO!</p>
             </div>
 
-            <div className="mx-auto flex w-fit rounded-full bg-[#F3F4F6] p-1 dark:bg-[#222] my-8">
+            <div className="mx-auto flex w-fit rounded-full bg-[#F3F4F6] p-1 dark:bg-[#222] my-6">
                 <button className="relative w-fit px-4 py-2 text-sm font-semibold capitalize text-foreground transition-colors">
                     <span className="relative z-10">monthly</span>
                     <span className="absolute inset-0 z-0 rounded-full bg-background shadow-sm"></span>

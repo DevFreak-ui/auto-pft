@@ -116,6 +116,8 @@ class ProcessingStatus(BaseModel):
 async def root():
     """Root endpoint with API information."""
     logger.info("root endpoint called")
+    logger.info(settings.REDIS_URL)
+    logger.info(redis_client)
     return {
         "message": "AutoPFTReport API",
         "version": "1.0.0",
