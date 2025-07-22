@@ -1,0 +1,25 @@
+FROM node:20-slim
+
+WORKDIR /app
+
+# Install native build tools and enable yarn via corepack
+RUN apt-get update && apt-get install -y \
+  python3 \
+  make \
+  g++ \
+  bash \
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable
+
+# Copy config files first to leverage Docker layer caching
+COPY package.json yarn.lock ./
+
+RUN rm -rf node_modules
+
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["yarn", "dev", "--host", "0.0.0.0"]

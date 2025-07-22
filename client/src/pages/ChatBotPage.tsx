@@ -10,7 +10,7 @@ const ChatBotPage = () => {
                 {/* Header */}
                 <div className="text-center">
                     <IconSparkles className="w-full flex justify-center mb-4" />
-                    <h1 className="text-4xl text-green/50 font-bold my-2">Transparency Builds Trust</h1>
+                    <h1 className="text-4xl text-green/70 font-bold my-2">Transparency Builds Trust</h1>
                     <p className="max-w-4/5 mx-auto text-white/80">
                         Understand why/how the our Agent Arrived at a particular conclusion or their chain of reasoning behind the reults
                     </p>
