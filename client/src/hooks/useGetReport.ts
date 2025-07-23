@@ -13,7 +13,7 @@ export function useGetReport() {
       const stat = await getPftStatus(request_id);
       if (stat.current_step === "Processing completed successfully") {
         const rep = await getPftReport(request_id);
-        setReport(rep);
+        setReport(rep.report);
         setStatus("success");
         return rep;
       } else {

@@ -63,11 +63,11 @@ const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportCl
                 {/* Stage 3 */}
                 <li className="flex items-center">
                     <span className={`relative flex items-center justify-center w-14 h-14 rounded-full lg:h-14 lg:w-14 shrink-0 border-2 ${step === 3 ? 'bg-blue-100 border-green dark:bg-green/10' : step > 3 ? 'bg-green border-green' : 'bg-gray-200/30 border-gray-300/30 dark:bg-green/10'}`}> 
-                        <div className={`w-12 h-12 rounded-full ${step === 3 ? 'bg-green/80 animate-ping' : step > 3 ? 'bg-green' : 'bg-gray-700/20'}`}></div>
+                        <div className={`w-12 h-12 rounded-full ${step === 3 && !canViewReport ? 'bg-green/80 animate-ping' : step === 3 && canViewReport ? 'bg-green/80' : step > 3 ? 'bg-green' : 'bg-gray-700/20'}`}></div>
                         
-                        {step === 3 ? (
+                        {step === 3 && !canViewReport ? (
                             <IconFileDescription className="absolute w-6 h-6 text-green animate-bounce"/>
-                        ) : step >= 3 ? (
+                        ) : step === 3 && canViewReport ? (
                             <IconChecks className={`absolute w-8 h-8 text-background`} />
                         ) : (
                             <IconFileDescription className="absolute w-6 h-6 text-white/10"/>
