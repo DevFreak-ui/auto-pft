@@ -1,6 +1,7 @@
 
 import { IconArrowRight, IconChecks, IconEmergencyBed, IconFileDescription } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
+import { useEffect } from "react"
 
 interface ReportProgressStepperProps {
     step?: 1 | 2 | 3
@@ -8,13 +9,31 @@ interface ReportProgressStepperProps {
     onViewReportClick?: () => void
 }
 
-const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportClick }: ReportProgressStepperProps) => {
+const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportClick, reportId }: ReportProgressStepperProps & { reportId?: string }) => {
 
     const stagesData = {
         1: {"title": "Extracting data from your uploaded document"},
         2: {"title": "Analyzing the extracted data"},
         3: {"title": "Generating your report"},
     }
+
+    // console.log("[Report ID from local first]: ", reportId)
+
+    useEffect(() => {
+        if (canViewReport && reportId) {
+            const key = 'GeneratedReportIds'
+            let ids: string[] = []
+            console.log("[Report ID from local]", reportId)
+            try {
+                const stored = localStorage.getItem(key)
+                if (stored) ids = JSON.parse(stored)
+            } catch {}
+            if (!ids.includes(reportId)) {
+                ids.push(reportId)
+                localStorage.setItem(key, JSON.stringify(ids))
+            }
+        }
+    }, [canViewReport, reportId]);
 
     return (
         <div className="flex flex-col items-center justify-center mt-20">
@@ -63,11 +82,11 @@ const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportCl
                 {/* Stage 3 */}
                 <li className="flex items-center">
                     <span className={`relative flex items-center justify-center w-14 h-14 rounded-full lg:h-14 lg:w-14 shrink-0 border-2 ${step === 3 ? 'bg-blue-100 border-green dark:bg-green/10' : step > 3 ? 'bg-green border-green' : 'bg-gray-200/30 border-gray-300/30 dark:bg-green/10'}`}> 
-                        <div className={`w-12 h-12 rounded-full ${step === 3 ? 'bg-green/80 animate-ping' : step > 3 ? 'bg-green' : 'bg-gray-700/20'}`}></div>
+                        <div className={`w-12 h-12 rounded-full ${step === 3 && !canViewReport ? 'bg-green/80 animate-ping' : step === 3 && canViewReport ? 'bg-green/80' : step > 3 ? 'bg-green' : 'bg-gray-700/20'}`}></div>
                         
-                        {step === 3 ? (
+                        {step === 3 && !canViewReport ? (
                             <IconFileDescription className="absolute w-6 h-6 text-green animate-bounce"/>
-                        ) : step >= 3 ? (
+                        ) : step === 3 && canViewReport ? (
                             <IconChecks className={`absolute w-8 h-8 text-background`} />
                         ) : (
                             <IconFileDescription className="absolute w-6 h-6 text-white/10"/>
