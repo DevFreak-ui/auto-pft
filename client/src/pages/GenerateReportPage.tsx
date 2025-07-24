@@ -65,7 +65,7 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 		<PageLayout>
 
 			{showProgress && (uploadStatus === "success" || uploadStatus === "uploading") ? (
-				<ReportProgressStepper step={step} canViewReport={canViewReport} onViewReportClick={handleViewReport} />
+				<ReportProgressStepper step={step} canViewReport={canViewReport} onViewReportClick={handleViewReport} reportId={requestId || undefined} />
 			) : (
 			<div className="flex flex-col items-center justify-center mt-20">
 				<h1 className="text-4xl text-gray-700 font-bold">

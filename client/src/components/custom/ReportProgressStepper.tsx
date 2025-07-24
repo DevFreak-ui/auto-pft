@@ -1,6 +1,7 @@
 
 import { IconArrowRight, IconChecks, IconEmergencyBed, IconFileDescription } from "@tabler/icons-react"
 import { Button } from "@/components/ui/button"
+import { useEffect } from "react"
 
 interface ReportProgressStepperProps {
     step?: 1 | 2 | 3
@@ -8,13 +9,31 @@ interface ReportProgressStepperProps {
     onViewReportClick?: () => void
 }
 
-const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportClick }: ReportProgressStepperProps) => {
+const ReportProgressStepper = ({ step = 1, canViewReport = false, onViewReportClick, reportId }: ReportProgressStepperProps & { reportId?: string }) => {
 
     const stagesData = {
         1: {"title": "Extracting data from your uploaded document"},
         2: {"title": "Analyzing the extracted data"},
         3: {"title": "Generating your report"},
     }
+
+    // console.log("[Report ID from local first]: ", reportId)
+
+    useEffect(() => {
+        if (canViewReport && reportId) {
+            const key = 'GeneratedReportIds'
+            let ids: string[] = []
+            console.log("[Report ID from local]", reportId)
+            try {
+                const stored = localStorage.getItem(key)
+                if (stored) ids = JSON.parse(stored)
+            } catch {}
+            if (!ids.includes(reportId)) {
+                ids.push(reportId)
+                localStorage.setItem(key, JSON.stringify(ids))
+            }
+        }
+    }, [canViewReport, reportId]);
 
     return (
         <div className="flex flex-col items-center justify-center mt-20">
