@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import { useDropzone } from "react-dropzone"
 import PageLayout from "./PageContainer"
 import ReportProgressStepper from "@/components/custom/ReportProgressStepper"
 import { Button } from "@/components/ui/button"
 import { usePftUpload } from "@/hooks/usePftUpload"
-import { useGetReport } from "@/hooks/useGetReport"
 import { useNavigate } from "react-router-dom"
 
 const GenerateReportPage = () => {
@@ -12,15 +11,12 @@ const GenerateReportPage = () => {
     upload,
     uploadStatus,
     requestId,
-    progress,
     step,
-    currentStep,
     canViewReport,
     error,
     pollStatus,
   } = usePftUpload();
 
-  const { getReport } = useGetReport();
   const [showProgress, setShowProgress] = useState(false);
   const navigate = useNavigate();
   // Handle file drop
