@@ -56,7 +56,7 @@ export function useGeneratedReports() {
             return {
               id,
               generated_by: report.generated_by,
-              generated_at: report.processing_metadata?.generated_at,
+              generated_at: report.generated_at,
               status: report.quality_assessment?.approval_status,
               completeness: report.quality_assessment?.completeness,
               reviewer: report.quality_assessment?.reviewer || null,
