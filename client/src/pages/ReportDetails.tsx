@@ -12,6 +12,8 @@ import {
     TooltipTrigger,
   } from "@/components/ui/tooltip"
 import ReportInteractionPanel from "@/components/custom/ReportInteractionPanel"
+import { downloadPDFReport } from "@/services/pdfService"
+import type { PDFReportData } from "@/services/pdfService"
 
 const ReportDetails = () => {
     const { reportId } = useParams();
@@ -19,6 +21,7 @@ const ReportDetails = () => {
     const [report, setReport] = useState<any>(null);
     const [status, setStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
     const [error, setError] = useState<string | null>(null);
+    const [downloading, setDownloading] = useState(false);
 
 
     useEffect(() => {
@@ -37,6 +40,46 @@ const ReportDetails = () => {
             setStatus("error")
             })
     }, [reportId, getReport]);
+
+    // Handle PDF download
+    const handleDownloadPDF = async () => {
+        if (!report) {
+            console.error("[ReportDetails] No report data available for download");
+            return;
+        }
+
+        setDownloading(true);
+        try {
+            console.log("[ReportDetails] Starting PDF download for report:", reportId);
+            
+            // Prepare the report data for PDF generation
+            const pdfReportData: PDFReportData = {
+                report_id: reportId || '',
+                patient_demographics: report.patient_demographics,
+                test_date: report.test_date,
+                raw_data: report.raw_data,
+                predicted_values: report.predicted_values,
+                percent_predicted: report.percent_predicted,
+                quality_metrics: report.quality_metrics,
+                interpretation: report.interpretation,
+                triage_assessment: report.triage_assessment,
+                report_content: report.report_content,
+                quality_assessment: report.quality_assessment,
+                generated_by: report.generated_by,
+                generated_at: report.generated_at,
+                processing_metadata: report.processing_metadata
+            };
+
+            await downloadPDFReport(pdfReportData);
+            console.log("[ReportDetails] PDF download completed successfully");
+            
+        } catch (error) {
+            console.error("[ReportDetails] Error downloading PDF:", error);
+            // You could show a toast notification here
+        } finally {
+            setDownloading(false);
+        }
+    };
 
     if (status === "loading") {
         return <PageLayout><div>Loading report...</div></PageLayout>
@@ -75,10 +118,21 @@ const ReportDetails = () => {
 
 
 
-                            <Button className="flex items-center gap-2 cursor-pointer">
-                                <DownloadIcon className="w-4 h-4" />
-                                Download
-                            </Button>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button 
+                                        className="flex items-center gap-2 cursor-pointer"
+                                        onClick={handleDownloadPDF}
+                                        disabled={downloading || !report}
+                                    >
+                                        <DownloadIcon className="w-4 h-4" />
+                                        {downloading ? "Generating..." : "Download"}
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent side="bottom">
+                                    <p>Download report as PDF</p>
+                                </TooltipContent>
+                            </Tooltip>
                         </div>
                     </div>
 
