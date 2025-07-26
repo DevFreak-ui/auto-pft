@@ -5,16 +5,13 @@ import { useGetReport } from "@/hooks/useGetReport"
 import { Button } from "@/components/ui/button"
 import { DownloadIcon } from "lucide-react"
 import CustomAccordion from "@/components/custom/CustomAccordion"
-import { IconEyeDotted, IconSparkles } from "@tabler/icons-react"
-import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
-import { useIsMobile } from "@/hooks/use-mobile"
-import CustomDrawerContent from "@/components/custom/CustomDrawerContent"
+import { IconSparkles } from "@tabler/icons-react"
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
-import InReportChat from "@/components/custom/InReportChat"
+import ReportInteractionPanel from "@/components/custom/ReportInteractionPanel"
 
 const ReportDetails = () => {
     const { reportId } = useParams();
@@ -22,9 +19,7 @@ const ReportDetails = () => {
     const [report, setReport] = useState<any>(null);
     const [status, setStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
     const [error, setError] = useState<string | null>(null);
-    const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const isMobile = useIsMobile()
 
     useEffect(() => {
         if (!reportId) return
@@ -78,16 +73,7 @@ const ReportDetails = () => {
                                 </TooltipContent>
                             </Tooltip>
 
-                            <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} direction={isMobile ? "bottom" : "right"}>
-                                <DrawerTrigger asChild>
-                                    <Button variant="outline" className="flex items-center gap-2 cursor-pointer">
-                                        <IconEyeDotted className="w-4 h-4" />
-                                        Add Review
-                                    </Button>
-                                </DrawerTrigger>
-                                
-                                <CustomDrawerContent />
-                            </Drawer>
+
 
                             <Button className="flex items-center gap-2 cursor-pointer">
                                 <DownloadIcon className="w-4 h-4" />
@@ -296,7 +282,7 @@ const ReportDetails = () => {
                 <section className="flex flex-col gap-4 lg:w-4/12">
                     <div className="flex flex-col gap-4 bg-white/3 rounded-md border border-white/10 h-full">
 
-                        <InReportChat report_id={report?.report_id} />
+                        <ReportInteractionPanel report_id={reportId || ''} />
 
                     </div>
                 </section>
