@@ -44,18 +44,19 @@ const ReportDetails = () => {
     }, [reportId, getReport]);
 
     if (status === "loading") {
-        return <PageLayout><div>Loading report...</div></PageLayout>;
+        return <PageLayout><div>Loading report...</div></PageLayout>
     }
     if (status === "error") {
-        return <PageLayout><div>Error: {error}</div></PageLayout>;
+        return <PageLayout><div>Error: {error}</div></PageLayout>
     }
 
     return (
         <PageLayout>
-            <div className="flex gap-2 text-sm">
+            <div className="flex gap-3 text-sm">
 
                 {/* Section for the report */}
-                <section className="flex flex-col gap-4 lg:w-8/12 text-muted-foreground bg-white/3 p-4 rounded-md">
+                <section className="flex flex-col gap-4 lg:w-8/12 text-muted-foreground bg-white/3 p-4 rounded-md overflow-auto"
+                    style={{ maxHeight: "calc(100vh - 6.8rem)" }}>
                     {/* <!-- Report Header --> */}
                     <div className="flex justify-between items-center text-sm">
                         <p>
@@ -292,8 +293,8 @@ const ReportDetails = () => {
                 </section>
 
                 {/* Section for the Chat */}
-                <section className="flex flex-col gap-4 lg:w-4/12 ">
-                    <div className="flex flex-col gap-4 bg-white/3 rounded-md border border-white/10">
+                <section className="flex flex-col gap-4 lg:w-4/12">
+                    <div className="flex flex-col gap-4 bg-white/3 rounded-md border border-white/10 h-full">
 
                         <InReportChat report_id={report?.report_id} />
 
