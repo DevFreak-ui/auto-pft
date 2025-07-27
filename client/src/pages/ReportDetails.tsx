@@ -14,6 +14,7 @@ import {
 import ReportInteractionPanel from "@/components/custom/ReportInteractionPanel"
 import { downloadPDFReport } from "@/services/pdfService"
 import type { PDFReportData } from "@/services/pdfService"
+import { useReportSettings } from "@/hooks/useReportSettings"
 
 const ReportDetails = () => {
     const { reportId } = useParams();
@@ -22,6 +23,9 @@ const ReportDetails = () => {
     const [status, setStatus] = useState<"idle" | "loading" | "error" | "success">("idle");
     const [error, setError] = useState<string | null>(null);
     const [downloading, setDownloading] = useState(false);
+    
+    // Get report settings for PDF generation
+    const { settings } = useReportSettings();
 
 
     useEffect(() => {
@@ -70,7 +74,9 @@ const ReportDetails = () => {
                 processing_metadata: report.processing_metadata
             };
 
-            await downloadPDFReport(pdfReportData);
+            await downloadPDFReport(pdfReportData, {
+                enabledSections: settings.enabledSections
+            });
             console.log("[ReportDetails] PDF download completed successfully");
             
         } catch (error) {
