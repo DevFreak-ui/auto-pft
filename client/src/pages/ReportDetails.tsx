@@ -15,6 +15,7 @@ import ReportInteractionPanel from "@/components/custom/ReportInteractionPanel"
 import { downloadPDFReport } from "@/services/pdfService"
 import type { PDFReportData } from "@/services/pdfService"
 import { useReportSettings } from "@/hooks/useReportSettings"
+import { formatReportDate } from "@/herlpers"
 
 const ReportDetails = () => {
     const { reportId } = useParams();
@@ -66,7 +67,7 @@ const ReportDetails = () => {
                 percent_predicted: report.percent_predicted,
                 quality_metrics: report.quality_metrics,
                 interpretation: report.interpretation,
-                triage_assessment: report.triage_assessment,
+                triage: report.triage,
                 report_content: report.report_content,
                 quality_assessment: report.quality_assessment,
                 generated_by: report.generated_by,
@@ -143,8 +144,16 @@ const ReportDetails = () => {
                     </div>
 
                     <div className="flex flex-col gap-4 lg:w-full mx-auto my-12 text-muted-foreground">
+
+                        {/* <!-- 1. Test Information --> */}
+                        <CustomAccordion title="Test Information" open={false}>
+                        <ul>
+                            <li><strong>Date:</strong> {formatReportDate(report?.test_date)}</li>
+                            <li><strong>Workflow Version:</strong> {report?.processing_metadata?.workflow_version}</li>
+                        </ul>
+                        </CustomAccordion>
                         
-                        {/* <!-- 1. Patient Demographics --> */}
+                        {/* <!-- 2. Patient Demographics --> */}
                         <CustomAccordion title="Patient Demographics">
                             <ul>
                                 <li><strong>Patient ID:</strong> {report?.patient_demographics?.patient_id}</li>
@@ -158,14 +167,7 @@ const ReportDetails = () => {
                         </CustomAccordion>
                         
 
-                        {/* <!-- 2. Test Information --> */}
-                        <CustomAccordion title="Test Information" open={false}>
-                        <ul>
-                            <li><strong>Date:</strong> {report?.test_date}</li>
-                            <li><strong>Workflow Version:</strong> {report?.workflow_version}</li>
-                            <li><strong>Agents Used:</strong> {report?.agents_used?.join(", ")}</li>
-                        </ul>
-                        </CustomAccordion>
+                        
 
                         {/* <!-- 3. Raw Data & Predictions --> */}
                         <CustomAccordion title="Raw Data & Predicted Values">
@@ -219,7 +221,6 @@ const ReportDetails = () => {
 
                         {/* <!-- 5. Interpretation --> */}
                         <CustomAccordion title="Interpretation">
-                        <summary><strong>Interpretation</strong></summary>
                         <ul>
                             <li><strong>Pattern:</strong> {report?.interpretation?.pattern}</li>
                             <li><strong>Severity:</strong> {report?.interpretation?.severity}</li>
@@ -229,22 +230,22 @@ const ReportDetails = () => {
                             <li><strong>Trend Analysis:</strong> {report?.interpretation?.trend_analysis}</li>
                             <li><strong>Clinical Significance:</strong> {report?.interpretation?.clinical_significance}</li>
                             <li><strong>Follow‑up Recommendations:</strong> {report?.interpretation?.follow_up_recommendations}</li>
-                            <li><strong>Interpretation Rationale:</strong> {report?.interpretation?.rationale}</li>
+                            <li><strong>Interpretation Rationale:</strong> {report?.interpretation?.interpretation_rationale}</li>
                         </ul>
                         </CustomAccordion>
 
                         {/* <!-- 6. Triage Assessment --> */}
                         <CustomAccordion title="Triage Assessment">
                         <ul>
-                            <li><strong>Level:</strong> {report?.triage_assessment?.level}</li>
-                            <li><strong>Reasons:</strong> {report?.triage_assessment?.reasons?.join(", ")}</li>
-                            <li><strong>Recommended Follow‑up:</strong> {report?.triage_assessment?.follow_up_recommended}</li>
-                            <li><strong>Immediate Actions:</strong> {report?.triage_assessment?.immediate_actions?.join(", ")}</li>
-                            <li><strong>Monitoring Requirements:</strong> {report?.triage_assessment?.monitoring_requirements?.join(", ")}</li>
+                            <li><strong>Level:</strong> {report?.triage?.level}</li>
+                            <li><strong>Reasons:</strong> {report?.triage?.reasons?.join(", ")}</li>
+                            <li><strong>Recommended Follow‑up:</strong> {report?.triage?.recommended_followup}</li>
+                            <li><strong>Immediate Actions:</strong> {report?.triage?.immediate_actions?.join(", ")}</li>
+                            <li><strong>Monitoring Requirements:</strong> {report?.triage?.monitoring_requirements?.join(", ")}</li>
                             <li><strong>Follow‑up Instructions:</strong>
                             <ul>
-                                <li>{report?.triage_assessment?.follow_up_instructions?.map((item: string, index: number) => (
-                                    <span key={index}>{item}{index < report?.triage_assessment?.follow_up_instructions?.length - 1 ? ", " : ""}</span>
+                                <li>{report?.triage?.follow_up_instructions?.map((item: string, index: number) => (
+                                    <span key={index}>{item}{index < report?.triage?.follow_up_instructions?.length - 1 ? ", " : ""}</span>
                                 ))}</li>
                             </ul>
                             </li>

@@ -58,7 +58,7 @@ export function useGeneratedReports() {
               generated_by: report.generated_by,
               generated_at: report.generated_at,
               status: report.quality_assessment?.approval_status,
-              severity: report.triage?.level || 'N/A',
+              severity: report.interpretation?.severity || 'N/A',
               reviewer: report.quality_assessment?.reviewer || null,
             };
           } catch {

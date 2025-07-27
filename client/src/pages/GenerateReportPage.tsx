@@ -5,6 +5,7 @@ import ReportProgressStepper from "@/components/custom/ReportProgressStepper"
 import { Button } from "@/components/ui/button"
 import { usePftUpload } from "@/hooks/usePftUpload"
 import { useNavigate } from "react-router-dom"
+import { UploadSuccessModal } from "@/components/custom/UploadSuccessModal"
 
 const GenerateReportPage = () => {
   const {
@@ -18,6 +19,7 @@ const GenerateReportPage = () => {
   } = usePftUpload();
 
   const [showProgress, setShowProgress] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const navigate = useNavigate();
   // Handle file drop
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
@@ -36,11 +38,17 @@ const GenerateReportPage = () => {
         smoking_status: "",
         requesting_physician: ""
       });
-      // Wait 5 seconds, then show progress and start polling
+      
+      // Show success modal immediately after successful upload
+      setShowSuccessModal(true);
       setTimeout(() => {
-        setShowProgress(true);
-        pollStatus(reqId);
-      }, 5000);
+        setShowSuccessModal(false)
+        // Small delay to ensure modal closes before stepper appears
+        setTimeout(() => {
+          setShowProgress(true);
+          pollStatus(reqId);
+        }, 100);
+      }, 6000);
     } catch (e) {
       // error is handled in hook
     }
@@ -59,6 +67,11 @@ const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone
 
 	return (
 		<PageLayout>
+			{/* Upload Success Modal */}
+			<UploadSuccessModal 
+				isOpen={showSuccessModal} 
+				onClose={() => setShowSuccessModal(false)} 
+			/>
 
 			{showProgress && (uploadStatus === "success" || uploadStatus === "uploading") ? (
 				<ReportProgressStepper step={step} canViewReport={canViewReport} onViewReportClick={handleViewReport} reportId={requestId || undefined} />
