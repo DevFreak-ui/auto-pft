@@ -40,11 +40,13 @@ const data = {
       url: "/dashboard",
       // icon: IconDashboard,
       icon: IconListDetails,
+      isFutureFeature: true,
     },
     {
       title: "Analytics",
       url: "#",
       icon: IconChartBar,
+      isFutureFeature: true,
     },
     {
       title: "KyerɛMu Bot",

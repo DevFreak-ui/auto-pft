@@ -43,7 +43,7 @@ export type Report = {
   generated_by: string
   generated_at: string
   status: string
-  completeness: number
+  severity: string
   reviewer: string
 }
 
@@ -105,19 +105,23 @@ export const columns: ColumnDef<Report>[] = [
     ),
   },
   {
-    accessorKey: "completeness",
+    accessorKey: "severity",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Completeness
+          Severity
           <ArrowUpDown />
         </Button>
       )
     },
-    cell: ({ row }) => <div className="lowercase ml-2">{row.getValue("completeness")}</div>,
+    cell: ({ row }) => (
+      <div className="capitalize ml-2">
+        {row.getValue("severity") || 'N/A'}
+      </div>
+    ),
   },
   {
     accessorKey: "reviewer",

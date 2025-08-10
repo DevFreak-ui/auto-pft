@@ -7,14 +7,14 @@ interface CustomAccordionProps {
 
 const CustomAccordion = ({ children, title, open = true }: CustomAccordionProps) => {
     return (
-        <details open={open}>
-            <summary className="border border-gray-200/20 bg-white/5 rounded-md p-2 w-full mb-2 text-sm cursor-pointer">
+        <div>
+            <h1 className="border-b border-gray-500/30 text-2xl text-white/80 font-bold  p-2 w-full mb-2 cursor-pointer">
                 {title}
-            </summary>
+            </h1>
             <div className="p-4">
                 {children}
             </div>
-        </details>
+        </div>
     )
 }
 
