@@ -18,6 +18,7 @@ export function NavMain({
     title: string
     url: string
     icon?: Icon
+    isFutureFeature?: boolean
   }[]
 }) {
   return (
@@ -51,6 +52,11 @@ export function NavMain({
                 <SidebarMenuButton tooltip={item.title} className="cursor-pointer">
                   {item.icon && <item.icon />}
                   <span>{item.title}</span>
+                  {item.isFutureFeature && (
+                    <span className="ml-auto text-[10px] bg-blue-100/50 text-blue-800 dark:bg-orange-500/10 dark:border dark:border-orange-500/50 dark:text-blue-200 px-2 py-1 rounded-full">
+                      Coming Soon
+                    </span>
+                  )}
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </Link>

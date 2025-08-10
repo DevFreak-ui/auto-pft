@@ -119,7 +119,7 @@ const ReportDetails = () => {
                                     </Button>
                                 </TooltipTrigger>
                                 <TooltipContent side="bottom">
-                                    <p>Set Report as Context and Start a Chat!</p>
+                                    <p>Start a new chat!</p>
                                 </TooltipContent>
                             </Tooltip>
 

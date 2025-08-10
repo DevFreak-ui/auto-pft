@@ -377,7 +377,7 @@ async def chat_with_medical_bot(message: ChatMessage) -> ChatResponse:
                 report_context = json.loads(data)
         
         # Get response from chatbot
-        response_data = medical_chatbot.answer_question(
+        response_data = await medical_chatbot.answer_question(
             question=message.message,
             report_context=report_context,
             user_context={"user_id": message.user_id}

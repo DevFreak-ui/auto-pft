@@ -39,7 +39,7 @@ const ChatBox = ({type, report_id}: ChatBoxProp) => {
             {/* Chat messages area - takes up all remaining space */}
             <div className="flex-1 flex flex-col gap-2 overflow-y-auto p-2">
                 {/* Welcome message - only show if no messages yet */}
-                {messages.length === 0 && !loading && (
+                {type !== "max" && messages.length === 0 && !loading && (
                     <div className="flex flex-col justify-center items-center h-full">
                         <IconMessageChatbot size={50} className="text-green/60" />
                         <h1 className="text-muted-foreground text-center mt-2">
@@ -57,8 +57,8 @@ const ChatBox = ({type, report_id}: ChatBoxProp) => {
                         <div
                             className={`max-w-[80%] rounded-lg px-3 py-2 text-[12px] text-white/80 ${
                                 msg.sender === "user"
-                                    ? "bg-white/10 text-white" // User message: right, faint white background
-                                    : "bg-transparent text-white" // Assistant message: left, no background
+                                    ? "bg-white/10 text-white"
+                                    : "bg-transparent text-white"
                             }`}
                         >
                             {msg.text}
@@ -89,13 +89,13 @@ const ChatBox = ({type, report_id}: ChatBoxProp) => {
             </div>
 
             {/* Fixed bottom section - input area and context */}
-            <div className="flex flex-col p-2">
+            <div className="flex flex-col p-2 w-100 justify-center items-center">
                 {/* Input area */}
-                <div className={`flex align-self-end bg-white/5 border-2 border-green/10 rounded-[8px] p-4 w-full min-w-54 ${type === "mini" ? 'h-28' : 'h-32'}`}>
+                <div className={`flex align-self-end bg-white/5 border-2 border-green/10 rounded-[8px] p-4 ${type === "mini" ? 'w-full h-28' : 'w-[150%] h-32'}`}>
                     <textarea 
                         rows={3}
                         className="w-full h-full flex justify-start text-start outline-none border-none bg-transparent resize-none placeholder:text-white/30"
-                        placeholder={report_id ? "Ask about this report..." : "Set a report as context or start a new chat ..."}
+                        placeholder={"Start a new chat ..."}
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
@@ -112,9 +112,11 @@ const ChatBox = ({type, report_id}: ChatBoxProp) => {
                 </div>
                 
                 {/* Context information */}
-                <div className="block bg-white/3 text-white/50 border-x border-b rounded-b-[8px] border-green/10 text-xs p-1 mx-5 text-center">
-                    Context Report ID: {repport_id || 'None'} - Name: ---
-                </div>
+                {type === "mini" && (
+                    <div className="block bg-white/3 text-white/50 border-x border-b rounded-b-[8px] border-green/10 text-xs p-1 mx-5 text-center">
+                        Context Report ID: {repport_id || 'None'}
+                    </div>
+                )}
             </div>
         </div>
     )
